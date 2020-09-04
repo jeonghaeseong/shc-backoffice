@@ -25,11 +25,6 @@ const LoginPage = () => {
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
 
-        // axios.get('http://localhost:4000/users').then((response) => {
-        //     console.log(response);
-        //     setRedirect(true);
-        // });
-
         axios
             .post('http://localhost:4000/login', {
                 email: values.email,
@@ -37,6 +32,10 @@ const LoginPage = () => {
             })
             .then(function (response) {
                 console.log(response.data);
+
+                if(response.data) {
+                    setRedirect(true);
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -44,6 +43,7 @@ const LoginPage = () => {
     };
 
     if (redirect) {
+        //history.pushState('/');
         return <Redirect to="/" />;
     }
 
