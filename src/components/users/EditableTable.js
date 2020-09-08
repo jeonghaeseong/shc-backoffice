@@ -117,14 +117,15 @@ const EditableTable = ({ dataSource, ...props }) => {
 
     const [columns, setColumns] = useState([
         {
+            key: '1',
             title: '아이디',
             dataIndex: 'USER_ID',
             width: 200,
             align: 'center',
             editable: true,
-
         },
         {
+            key: '2',
             title: '이름',
             dataIndex: 'USER_NAME',
             width: 200,
@@ -132,14 +133,15 @@ const EditableTable = ({ dataSource, ...props }) => {
             editable: true,
         },
         {
+            key: '3',
             title: '별명',
             dataIndex: 'NICK_NAME',
             width: 200,
             align: 'center',
             editable: true,
         },
-
         {
+            key: '3',
             title: '휴대전화',
             dataIndex: 'PHONE',
             width: 200,

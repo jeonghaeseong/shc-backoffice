@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Layout, Menu, Breadcrumb, PageHeader, Avatar, Popover } from 'antd';
 import {
     DesktopOutlined,
-    PieChartOutlined,
-    TeamOutlined,
     UserOutlined
 } from '@ant-design/icons';
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Users from '../components/users';
-
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
 const content = () => {
