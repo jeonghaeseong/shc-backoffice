@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, message } from 'antd';
+import { useAuth } from '../context/auth';
 
 const layout = {
     labelCol: {
@@ -20,7 +21,9 @@ const tailLayout = {
 };
 
 const LoginPage = () => {
-    const [redirect, setRedirect] = useState(false);
+
+    const [isLoggedIn, setLoggedIn] = useState(false);
+    const { setAuthTokens } = useAuth();
 
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
@@ -31,69 +34,83 @@ const LoginPage = () => {
                 password: values.password,
             })
             .then(function (response) {
+
+                // 01. 로그인 성공시 token을 localStorage
+                // 02. 메인 페이지로 이동
                 console.log(response.data);
 
-                if(response.data) {
-                    setRedirect(true);
+                if(response.status === 200) {
+                    setAuthTokens(response.data);
+                    setLoggedIn(true);
+                }
+                else {
+                    message.error('아이디, 비밀번호 틀림1');
+                    // setIsError(true);
                 }
             })
             .catch(function (error) {
-                console.log(error);
+                message.error('아이디, 비밀번호 틀림2');
+                // setIsError(true);
             });
     };
 
-    if (redirect) {
-        //history.pushState('/');
+    if (isLoggedIn) {
         return <Redirect to="/" />;
     }
 
     return (
-        <div
-            style={{
-                width: '400px',
-                // marginLeft: 'auto',
-                // marginRight: 'auto',
-                // marginTop: '200px',
-            }}
-        >
-            <Form {...layout} onFinish={onFinish}>
-                <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your email.',
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password.',
-                        },
-                    ]}
-                >
-                    <Input.Password />
-                </Form.Item>
-                <Form.Item
-                    {...tailLayout}
-                    name="remember"
-                    valuePropName="checked"
-                >
-                    <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                        Submit
-                    </Button>
-                </Form.Item>
-            </Form>
+        <div style={{
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <div
+                style={{
+                    width: '400px'
+                }}
+            >
+                <Form {...layout} onFinish={onFinish}>
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your email.',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Password"
+                        name="password"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password.',
+                            },
+                        ]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
+                    <Form.Item
+                        {...tailLayout}
+                        name="remember"
+                        valuePropName="checked"
+                    >
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+                    <Form.Item {...tailLayout}>
+                        <Button type="primary" htmlType="submit">
+                            Login
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
         </div>
     );
 };
