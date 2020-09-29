@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SearchForm from './SearchForm';
-import DataTable from './DataTable';
+import SearchResult from './SearchResult';
 // import EditableTable from './EditableTable'
 
 const Users = () => {
@@ -11,7 +11,7 @@ const Users = () => {
     return (
         <div>
             <SearchForm handleLoading={setLoading} setDataSource={setDataSource} />
-            <DataTable loading={loading} dataSource={dataSource} />
+            <SearchResult loading={loading} dataSource={dataSource} setDataSource={setDataSource} />
         </div>
     );
 };

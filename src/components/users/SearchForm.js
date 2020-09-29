@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Form, Row, Col, Button } from 'antd';
+import { Form, Row, Col, Button, Input } from 'antd';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
 
 import { useAuth } from '../../context/auth';
@@ -21,7 +21,9 @@ const SearchForm = ({ handleLoading, setDataSource }) => {
         handleLoading(true);
 
         axios
-            .get('http://localhost:4000/users')
+            .get('https://localhost:44380/api/users', {
+                params: values
+            })
             .then(function (response) {
 
                 // 01. 로그인 성공시 token을 localStorage
@@ -54,16 +56,38 @@ const SearchForm = ({ handleLoading, setDataSource }) => {
             form={form}
             onFinish={onFinish}
         >
-            <Row gutter={24}></Row>
+            <Row gutter={24}>
+                <Col span={6}>
+                    <Form.Item
+                        name={`email`}
+                        label={`이메일`}
+                    >
+                        <Input placeholder="placeholder" />
+                    </Form.Item>
+                </Col>
+                <Col span={4}>
+                    <Form.Item
+                        name={`name`}
+                        label={`이름`}
+                    >
+                        <Input placeholder="placeholder" />
+                    </Form.Item>
+                </Col>
+            </Row>
             <Row gutter={24}>
                 <Col span={24} style={{ textAlign: 'right' }}>
                     <Button type="primary" htmlType="submit">Search</Button>
                     <Button style={{
                                 margin: '0 8px',
-                            }}>
+                            }}
+                            onClick={() =>{
+                                form.resetFields();
+                            }}
+                    >
                         Clear
                     </Button>
-                    <Link
+                    <Button
+                        type="link"
                         style={{
                             fontSize: 12,
                         }}
@@ -72,7 +96,7 @@ const SearchForm = ({ handleLoading, setDataSource }) => {
                         }}
                     >
                         {expand ? <UpOutlined /> : <DownOutlined />} Collapse
-                    </Link>
+                    </Button>
                 </Col>
             </Row>
         </Form>

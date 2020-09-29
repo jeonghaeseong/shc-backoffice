@@ -29,7 +29,7 @@ const LoginPage = () => {
         console.log('Received values of form: ', values);
 
         axios
-            .post('http://localhost:4000/login', {
+            .post('https://localhost:44380/api/Login', {
                 email: values.email,
                 password: values.password,
             })

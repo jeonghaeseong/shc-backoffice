@@ -46,6 +46,7 @@ const EditableCell = ({
     const [editing, setEditing] = useState(false);
     const inputRef = useRef();
     const form = useContext(EditableContext);
+
     useEffect(() => {
         if (editing) {
             inputRef.current.focus();
@@ -59,6 +60,7 @@ const EditableCell = ({
         });
     };
 
+    // Enter, 
     const save = async e => {
         try {
             const values = await form.validateFields();
@@ -103,7 +105,7 @@ const EditableCell = ({
     return <td {...restProps}>{childNode}</td>;
 };
 
-const EditableTable = ({ dataSource, ...props }) => {
+const EditableTable = ({ dataSource, setDataSource, ...props }) => {
 
     const components = {
         header: {
@@ -119,31 +121,31 @@ const EditableTable = ({ dataSource, ...props }) => {
         {
             key: '1',
             title: '아이디',
-            dataIndex: 'USER_ID',
+            dataIndex: 'userId',
             width: 200,
             align: 'center',
-            editable: true,
+            editable: false,
         },
         {
             key: '2',
             title: '이름',
-            dataIndex: 'USER_NAME',
+            dataIndex: 'name',
             width: 200,
             align: 'center',
             editable: true,
         },
         {
             key: '3',
-            title: '별명',
-            dataIndex: 'NICK_NAME',
+            title: '이메일',
+            dataIndex: 'email',
             width: 200,
             align: 'center',
             editable: true,
         },
         {
             key: '3',
-            title: '휴대전화',
-            dataIndex: 'PHONE',
+            title: '수정일시',
+            dataIndex: 'updateDateTime',
             width: 200,
             align: 'center',
             editable: true,
@@ -164,6 +166,14 @@ const EditableTable = ({ dataSource, ...props }) => {
         });
     };
 
+    const handleSave = (row) => {
+        const newData = [...dataSource];
+        const index = newData.findIndex((item) => row.key === item.key);
+        const item = newData[index];
+        newData.splice(index, 1, { ...item, ...row });
+        setDataSource(newData);
+    };
+
     const tmpColumns = columns.map((col, index) => {
         return ({
             ...col,
@@ -177,6 +187,7 @@ const EditableTable = ({ dataSource, ...props }) => {
                     editable: col.editable,
                     dataIndex: col.dataIndex,
                     title: col.title,
+                    handleSave: handleSave
                 })
             },
         })
