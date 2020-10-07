@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { Form, Input, Button, Checkbox, message } from 'antd';
-import { useAuth } from '../context/auth';
+import { useAuth } from '../../context/auth';
 
 const layout = {
     labelCol: {
@@ -20,7 +20,7 @@ const tailLayout = {
     },
 };
 
-const LoginPage = () => {
+const Login = () => {
 
     const [isLoggedIn, setLoggedIn] = useState(false);
     const { setAuthTokens } = useAuth();
@@ -115,4 +115,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default Login;

@@ -33,7 +33,7 @@ const CustomAvatar = () => {
     );
 };
 
-const MainPage = ({children}) => {
+const Main = ({children}) => {
 
     const [collapsed, setCollapsed] = useState(false);
     
@@ -102,4 +102,4 @@ const MainPage = ({children}) => {
     );
 };
 
-export default MainPage;
+export default Main;

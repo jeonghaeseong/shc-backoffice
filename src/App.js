@@ -3,8 +3,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import {AuthContext} from './context/auth';
 
-import LoginPage from './pages/LoginPage';
-import MainPage from './pages/MainPage';
+import Login from './components/login/Login';
+import Main from './components/main/Main';
 
 import Users from './components/users';
 import Exercise from './components/exercise';
@@ -26,11 +26,11 @@ function App() {
         <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
             <BrowserRouter>
                 <Switch>
-                    <Route path="/login" component={LoginPage} />
-                    <MainPage>
+                    <Route path="/login" component={Login} />
+                    <Main>
                         <PrivateRoute exact path="/users" component={Users} />
                         <PrivateRoute exact path="/exercise" component={Exercise} />
-                    </MainPage>
+                    </Main>
                 </Switch>
             </BrowserRouter>
         </AuthContext.Provider>

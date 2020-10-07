@@ -87,6 +87,7 @@ const EditableCell = ({
                     },
                 ]}
             >
+                {/* input, comobo, modal, checkbox, radio */}
                 <Input ref={inputRef} onPressEnter={save} onBlur={save} />
             </Form.Item>
         ) : (
@@ -105,8 +106,13 @@ const EditableCell = ({
     return <td {...restProps}>{childNode}</td>;
 };
 
+/**
+ * @description 
+ * @param {Array} dataSource
+ */
 const EditableTable = ({ dataSource, setDataSource, ...props }) => {
 
+    // antd Table Component 내부에서 사용할 컴포넌트를 설정
     const components = {
         header: {
             cell: ResizeableTitle,
@@ -152,6 +158,8 @@ const EditableTable = ({ dataSource, setDataSource, ...props }) => {
         }
     ]);
 
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
     const handleResize = index => (e, { size }) => {
 
         setColumns((columns) => {
@@ -193,12 +201,23 @@ const EditableTable = ({ dataSource, setDataSource, ...props }) => {
         })
     });
 
+    const onSelectChange = selectedRowKeys => {
+        setSelectedRowKeys(selectedRowKeys);
+    };
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+
     return (
         <Table
             components={components}
             rowClassName={() => 'editable-row'}
-            dataSource={dataSource}
             columns={tmpColumns}
+            dataSource={dataSource}
+            rowSelection={rowSelection}
+            pagination={{total: 500}}
             {...props}
         />
     );
