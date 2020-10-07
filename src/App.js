@@ -27,10 +27,7 @@ function App() {
             <BrowserRouter>
                 <Switch>
                     <Route path="/login" component={Login} />
-                    <Main>
-                        <PrivateRoute exact path="/users" component={Users} />
-                        <PrivateRoute exact path="/exercise" component={Exercise} />
-                    </Main>
+                    <PrivateRoute path="/main" component={Main} />
                 </Switch>
             </BrowserRouter>
         </AuthContext.Provider>
